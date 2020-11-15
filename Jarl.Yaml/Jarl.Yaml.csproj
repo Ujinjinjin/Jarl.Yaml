@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <PackageId>Jarl.Yaml</PackageId>
+        <Version>1.0.1</Version>
+        <Authors>Osamu TAKEUCHI</Authors>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/ujinjinjin/dingo</RepositoryUrl>
+        <Company>None</Company>
+    </PropertyGroup>
+
+</Project>
