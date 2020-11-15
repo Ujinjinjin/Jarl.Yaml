@@ -1,4 +1,4 @@
-# YamlSerializer
+# Jarl.Yaml
 
 This is a fork of the project [YamlSerializer](https://yamlserializer.codeplex.com/) on codeplex made by Osamu TAKEUCHI
 
