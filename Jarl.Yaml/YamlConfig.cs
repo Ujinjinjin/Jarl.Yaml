@@ -1,4 +1,4 @@
-﻿using Jarl.Yaml.Serialization;
+using Jarl.Yaml.Serialization;
 using System;
 using System.Globalization;
 using System.IO;
@@ -25,7 +25,7 @@ namespace Jarl.Yaml
         /// the YAML specification but sometimes useful. The default is true.
         /// </summary>
         /// <remarks>
-        /// <para>The YAML sepcification requires a YAML parser to normalize every line break that 
+        /// <para>The YAML specification requires a YAML parser to normalize every line break that 
         /// is not escaped in a YAML stream, into a single line feed "\n" when it parse a YAML stream. 
         /// But this is not convenient in some cases, especially under Windows environment, where 
         /// the system default line break 
@@ -79,10 +79,10 @@ namespace Jarl.Yaml
         /// //   cde
         /// // ...
         /// 
-        /// // line breaks are nomalized to "\r\n" (= YamlNode.DefaultConfig.LineBreakForOutput)
+        /// // line breaks are normalized to "\r\n" (= YamlNode.DefaultConfig.LineBreakForOutput)
         /// // "%YAML 1.2\r\n---\r\n|-2\r\n  a\r\n    b\r\ncde\r\n...\r\n"
         /// 
-        /// // line breaks are nomalized to "\n" (= YamlNode.DefaultConfig.LineBreakForInput)
+        /// // line breaks are normalized to "\n" (= YamlNode.DefaultConfig.LineBreakForInput)
         /// var restored = YamlNode.FromYaml(yaml)[0];
         /// // "a\n  b\ncde"
         /// 
@@ -91,7 +91,7 @@ namespace Jarl.Yaml
         /// YamlNode.DefaultConfig.NormalizeLineBreaks = false;
         /// yaml = node.ToYaml();
         /// 
-        /// // line breaks are not nomalized
+        /// // line breaks are not normalized
         /// // "%YAML 1.2\r\n---\r\n|-2\r\n  a\r\n    b\rcde\r\n...\r\n"
         /// 
         /// // Unless line breaks in YAML stream is preserved, original line
@@ -113,7 +113,7 @@ namespace Jarl.Yaml
         /// <remarks>
         /// <para>The escaped line breaks makes the YAML stream hard to read, but is required to 
         /// prevent the line break characters be normalized by the YAML parser; the YAML 
-        /// sepcification requires a YAML parser to normalize all line breaks that are not escaped
+        /// specification requires a YAML parser to normalize all line breaks that are not escaped
         /// into a single line feed "\n" when it parse a YAML source.</para>
         /// 
         /// <para>
@@ -163,10 +163,10 @@ namespace Jarl.Yaml
         /// //   cde
         /// // ...
         /// 
-        /// // line breaks are nomalized to "\r\n" (= YamlNode.DefaultConfig.LineBreakForOutput)
+        /// // line breaks are normalized to "\r\n" (= YamlNode.DefaultConfig.LineBreakForOutput)
         /// // "%YAML 1.2\r\n---\r\n|-2\r\n  a\r\n    b\r\ncde\r\n...\r\n"
         /// 
-        /// // line breaks are nomalized to "\n" (= YamlNode.DefaultConfig.LineBreakForInput)
+        /// // line breaks are normalized to "\n" (= YamlNode.DefaultConfig.LineBreakForInput)
         /// var restored = YamlNode.FromYaml(yaml)[0];
         /// // "a\n  b\ncde"
         /// 
@@ -175,7 +175,7 @@ namespace Jarl.Yaml
         /// YamlNode.DefaultConfig.NormalizeLineBreaks = false;
         /// yaml = node.ToYaml();
         /// 
-        /// // line breaks are not nomalized
+        /// // line breaks are not normalized
         /// // "%YAML 1.2\r\n---\r\n|-2\r\n  a\r\n    b\rcde\r\n...\r\n"
         /// 
         /// // Unless line breaks in YAML stream is preserved, original line
@@ -232,10 +232,10 @@ namespace Jarl.Yaml
         /// //   cde
         /// // ...
         /// 
-        /// // line breaks are nomalized to "\r\n" (= YamlNode.DefaultConfig.LineBreakForOutput)
+        /// // line breaks are normalized to "\r\n" (= YamlNode.DefaultConfig.LineBreakForOutput)
         /// // "%YAML 1.2\r\n---\r\n|-2\r\n  a\r\n    b\r\ncde\r\n...\r\n"
         /// 
-        /// // line breaks are nomalized to "\n" (= YamlNode.DefaultConfig.LineBreakForInput)
+        /// // line breaks are normalized to "\n" (= YamlNode.DefaultConfig.LineBreakForInput)
         /// var restored = YamlNode.FromYaml(yaml)[0];
         /// // "a\n  b\ncde"
         /// 
@@ -244,7 +244,7 @@ namespace Jarl.Yaml
         /// YamlNode.DefaultConfig.NormalizeLineBreaks = false;
         /// yaml = node.ToYaml();
         /// 
-        /// // line breaks are not nomalized
+        /// // line breaks are not normalized
         /// // "%YAML 1.2\r\n---\r\n|-2\r\n  a\r\n    b\rcde\r\n...\r\n"
         /// 
         /// // Unless line breaks in YAML stream is preserved, original line
@@ -268,7 +268,7 @@ namespace Jarl.Yaml
         /// false, though it is also violate the YAML specification.</para>
         /// </summary>
         /// <remarks>
-        /// <para>The YAML sepcification requires a YAML parser to normalize every line break that 
+        /// <para>The YAML specification requires a YAML parser to normalize every line break that 
         /// is not escaped in a YAML stream, into a single line feed "\n" when it parse a YAML stream. 
         /// But this is not convenient in some cases, especially under Windows environment, where 
         /// the system default line break 
@@ -322,10 +322,10 @@ namespace Jarl.Yaml
         /// //   cde
         /// // ...
         /// 
-        /// // line breaks are nomalized to "\r\n" (= YamlNode.DefaultConfig.LineBreakForOutput)
+        /// // line breaks are normalized to "\r\n" (= YamlNode.DefaultConfig.LineBreakForOutput)
         /// // "%YAML 1.2\r\n---\r\n|-2\r\n  a\r\n    b\r\ncde\r\n...\r\n"
         /// 
-        /// // line breaks are nomalized to "\n" (= YamlNode.DefaultConfig.LineBreakForInput)
+        /// // line breaks are normalized to "\n" (= YamlNode.DefaultConfig.LineBreakForInput)
         /// var restored = YamlNode.FromYaml(yaml)[0];
         /// // "a\n  b\ncde"
         /// 
@@ -334,7 +334,7 @@ namespace Jarl.Yaml
         /// YamlNode.DefaultConfig.NormalizeLineBreaks = false;
         /// yaml = node.ToYaml();
         /// 
-        /// // line breaks are not nomalized
+        /// // line breaks are not normalized
         /// // "%YAML 1.2\r\n---\r\n|-2\r\n  a\r\n    b\rcde\r\n...\r\n"
         /// 
         /// // Unless line breaks in YAML stream is preserved, original line
@@ -355,7 +355,7 @@ namespace Jarl.Yaml
         /// <summary>
         /// If true, the verbatim style of a tag, i.e. !&lt; &gt; is avoided as far as possible.
         /// </summary>
-        public bool DontUseVerbatimTag = false;
+        public bool DoNotUseVerbatimTag = false;
         /// <summary>
         /// If true, all properties with null value are avoided
         /// </summary>

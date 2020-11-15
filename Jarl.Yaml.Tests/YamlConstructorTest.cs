@@ -251,8 +251,8 @@ namespace Jarl.Yaml.Tests
             Assert.IsTrue(double.IsNegativeInfinity((double)serializer.Deserialize("-.INF")[0]));
 
             var time = DateTime.Now;
-            var utctime = time.ToUniversalTime();
-            Assert.AreEqual(time, utctime.ToLocalTime());
+            var utcTime = time.ToUniversalTime();
+            Assert.AreEqual(time, utcTime.ToLocalTime());
 
             Assert.AreEqual(new DateTime(1999, 12, 31, 0, 0, 0), serializer.Deserialize("1999-12-31")[0]);
             Assert.AreEqual(new DateTime(1999, 12, 31, 12, 00, 00), serializer.Deserialize("1999-12-31 12:00:00")[0]);
@@ -267,9 +267,8 @@ namespace Jarl.Yaml.Tests
             Assert.AreEqual(new DateTime(1999, 12, 30, 23, 00, 00, 010, DateTimeKind.Utc).ToLocalTime(), serializer.Deserialize("1999-12-31 1:00:00.010 +2")[0]);
             Assert.AreEqual(new DateTime(2000, 1, 1, 1, 00, 00, 000, DateTimeKind.Utc).ToLocalTime(), serializer.Deserialize("1999-12-31 23:00:00 -2")[0]);
 
-            Assert.AreEqual("1999/12/30 23:00:00", ( new DateTime(1999, 12, 30, 23, 00, 00, 010) ).ToString());
-            YamlScalar node;
-            YamlNode.DefaultConfig.TagResolver.Encode(time, out node);
+            Assert.AreEqual("1999/12/30 23:00:00", ( new DateTime(1999, 12, 30, 23, 00, 00, 010) ).ToString("yyyy/MM/dd HH:mm:ss"));
+			YamlNode.DefaultConfig.TagResolver.Encode(time, out var node);
             var recovered = DateTime.Parse(node.Value);
             Assert.IsTrue(time - recovered < new TimeSpan(0,0,0,0,1));
             recovered = DateTime.Parse("1999-12-31T00:00:01Z");

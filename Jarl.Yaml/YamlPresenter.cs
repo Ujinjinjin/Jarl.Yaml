@@ -483,7 +483,7 @@ namespace Jarl.Yaml
                 return "";
             if ( tag == YamlNode.ShorthandTag(GetPropertyOrNull(node, "expectedTag")) )
                 return "";
-            if ( config.DontUseVerbatimTag ) {
+            if ( config.DoNotUseVerbatimTag ) {
                 if ( tag.StartsWith("!") ) {
                     tag = tag.UriEscapeForTag();
                 } else {
