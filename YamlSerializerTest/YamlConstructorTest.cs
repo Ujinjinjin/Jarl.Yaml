@@ -1,13 +1,12 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using NUnit.Framework;
+using System.ComponentModel;
+using System.Drawing;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Yaml;
 using System.Yaml.Serialization;
-using System.ComponentModel;
-using System.Text.RegularExpressions;
 
 namespace YamlSerializerTest
 {
@@ -60,7 +59,7 @@ namespace YamlSerializerTest
                 return base.CanConvertFrom(context, sourceType);
             }
 
-            public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
+            public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
             {
                 if ( value is string ) {
                     string[] v = ( (string)value ).Split(new char[] { ',' });
@@ -80,7 +79,7 @@ namespace YamlSerializerTest
                 return base.CanConvertFrom(context, destinationType);
             }
 
-            public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
+            public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
             {
                 if ( destinationType == typeof(string) ) {
                     return ( (TestStructWithTypeConverter)value ).a + "," + ( (TestStructWithTypeConverter)value ).b;
@@ -291,8 +290,8 @@ namespace YamlSerializerTest
             brush.Tag = "!System.Drawing.SolidBrush";
             Assert.Throws<MissingMethodException>(()=>constructor.NodeToObject(brush, YamlNode.DefaultConfig));
             var config = new YamlConfig();
-            config.AddActivator<System.Drawing.SolidBrush>(() => new System.Drawing.SolidBrush(System.Drawing.Color.Black));
-            Assert.AreEqual(System.Drawing.Color.Blue, ((System.Drawing.SolidBrush)constructor.NodeToObject(brush, config)).Color);
+            config.AddActivator<SolidBrush>(() => new SolidBrush(Color.Black));
+            Assert.AreEqual(Color.Blue, ((SolidBrush)constructor.NodeToObject(brush, config)).Color);
         }
 
         [Test]

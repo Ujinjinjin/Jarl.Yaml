@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using NUnit.Framework;
+using System;
+using System.Diagnostics;
+using System.IO;
 using System.Text;
-
-using NUnit.Framework;
-using System.Resources;
 using System.Yaml;
-using YamlSerializerTest.Properties;
 
 namespace YamlSerializerTest
 {
@@ -410,8 +407,8 @@ namespace YamlSerializerTest
             const int n= 1000000;
 
             // how to use memory stream
-            var ms = new System.IO.MemoryStream();
-            var tw = new System.IO.StreamWriter(ms);
+            var ms = new MemoryStream();
+            var tw = new StreamWriter(ms);
             tw.WriteLine("abc");
             tw.WriteLine("abc");
             tw.Close();
@@ -419,20 +416,20 @@ namespace YamlSerializerTest
             Assert.AreEqual("abc\r\nabc\r\n", UTF8Encoding.UTF8.GetString(ms.ToArray()));
 
             // performance
-            ms = new System.IO.MemoryStream();
-            tw = new System.IO.StreamWriter(ms);
+            ms = new MemoryStream();
+            tw = new StreamWriter(ms);
 
             var t = DateTime.Now;
             for ( int i = 0; i < n; i++ )
                 tw.WriteLine("abc"); // not so slow
-            System.Diagnostics.Debug.WriteLine(( DateTime.Now - t ).ToString());
+            Debug.WriteLine(( DateTime.Now - t ).ToString());
 
             var sb = new StringBuilder();
 
             t = DateTime.Now;
             for ( int i = 0; i < n; i++ )
                 sb.AppendLine("abc");
-            System.Diagnostics.Debug.WriteLine(( DateTime.Now - t ).ToString());
+            Debug.WriteLine(( DateTime.Now - t ).ToString());
         }
 
         [Test]

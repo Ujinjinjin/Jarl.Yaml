@@ -1,14 +1,13 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using NUnit.Framework;
-using System.Yaml;
-using System.Yaml.Serialization;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.Globalization;
+using System.Runtime.InteropServices;
+using System.Yaml;
+using System.Yaml.Serialization;
 
 namespace YamlSerializerTest
 {
@@ -314,19 +313,19 @@ namespace YamlSerializerTest
 
             Assert.AreEqual(2, array4.Rank);
             Assert.AreEqual(8, sizeof(double));
-            var p= System.Runtime.InteropServices.Marshal.UnsafeAddrOfPinnedArrayElement(array4, 0);
-            Assert.AreEqual(1, System.Runtime.InteropServices.Marshal.ReadInt16(p));
-            p = System.Runtime.InteropServices.Marshal.UnsafeAddrOfPinnedArrayElement(array4, 1);
-            Assert.AreEqual(2, System.Runtime.InteropServices.Marshal.ReadInt16(p));
-            p = System.Runtime.InteropServices.Marshal.UnsafeAddrOfPinnedArrayElement(array4, 2);
-            Assert.AreEqual(3, System.Runtime.InteropServices.Marshal.ReadInt16(p));
-            p = System.Runtime.InteropServices.Marshal.UnsafeAddrOfPinnedArrayElement(array4, 3);
-            Assert.AreEqual(4, System.Runtime.InteropServices.Marshal.ReadInt16(p));
+            var p= Marshal.UnsafeAddrOfPinnedArrayElement(array4, 0);
+            Assert.AreEqual(1, Marshal.ReadInt16(p));
+            p = Marshal.UnsafeAddrOfPinnedArrayElement(array4, 1);
+            Assert.AreEqual(2, Marshal.ReadInt16(p));
+            p = Marshal.UnsafeAddrOfPinnedArrayElement(array4, 2);
+            Assert.AreEqual(3, Marshal.ReadInt16(p));
+            p = Marshal.UnsafeAddrOfPinnedArrayElement(array4, 3);
+            Assert.AreEqual(4, Marshal.ReadInt16(p));
             var array5 = new short[1];
-            System.Runtime.InteropServices.Marshal.Copy(p, array5, 0, 1);
+            Marshal.Copy(p, array5, 0, 1);
             Assert.AreEqual(4, array5[0]);
             var array6 = new byte[2];
-            System.Runtime.InteropServices.Marshal.Copy(p, array6, 0, 1);
+            Marshal.Copy(p, array6, 0, 1);
             Assert.AreEqual(4, array6[0]);
             Assert.AreEqual(0, array6[1]);
 
@@ -486,12 +485,12 @@ namespace YamlSerializerTest
             Assert.IsFalse(( (object)0.0 ).Equals(0)); // !!
             Assert.IsFalse(( (object)(float)0.0 ).Equals(0.0)); // !!
             Assert.IsFalse( ( (object)0.0 ) == ((object)0)); // !!
-            Assert.IsFalse(ValueType.Equals((object)0.0, (object)0)); // !!
-            Assert.IsFalse(ValueType.Equals((object)0.0, (object)(float)0)); // !!
+            Assert.IsFalse(Equals((object)0.0, (object)0)); // !!
+            Assert.IsFalse(Equals((object)0.0, (object)(float)0)); // !!
             Assert.IsFalse(( (ValueType)0.0 ) == ( (ValueType)0 )); // !!
             Assert.IsFalse(( (ValueType)0.0 ) == ( (ValueType)0 )); // !!
-            Assert.IsFalse(Math.Equals((object)0, (object)0.0)); // !!!!
-            Assert.IsFalse(TypeDescriptor.Equals((object)0.0,(object)0));
+            Assert.IsFalse(Equals((object)0, (object)0.0)); // !!!!
+            Assert.IsFalse(Equals((object)0.0,(object)0));
 //            Assert.Throws<ArgumentException>(()=> 0.0.CompareTo( (object)0));
 //            Assert.Throws<InvalidCastException>(()=> ((double)(object)0).CompareTo((double)(object)(float)0.0));
             Assert.IsTrue(0.0 == (double)(int)(object)0);
@@ -709,9 +708,9 @@ namespace YamlSerializerTest
         public void CultureTest()
         {
             var config = new YamlConfig();
-            config.Culture = new System.Globalization.CultureInfo("da-DK");
+            config.Culture = new CultureInfo("da-DK");
             var serializer = new YamlSerializer(config);
-            object obj = new System.Drawing.PointF(1.2f, 3.1f);
+            object obj = new PointF(1.2f, 3.1f);
             var yaml = serializer.Serialize(obj);
             Assert.AreEqual(
                 BuildResult(
@@ -724,7 +723,7 @@ namespace YamlSerializerTest
             var restore = serializer.Deserialize(yaml)[0];
             Assert.AreEqual(obj, restore);
 
-            obj = new System.Drawing.Point(1, 3);
+            obj = new Point(1, 3);
             yaml = serializer.Serialize(obj);
             Assert.AreEqual(
                 BuildResult(
@@ -735,7 +734,7 @@ namespace YamlSerializerTest
             restore = serializer.Deserialize(yaml)[0];
             Assert.AreEqual(obj, restore);
 
-            YamlNode.DefaultConfig.Culture = System.Globalization.CultureInfo.CurrentCulture;
+            YamlNode.DefaultConfig.Culture = CultureInfo.CurrentCulture;
         }
     }
 

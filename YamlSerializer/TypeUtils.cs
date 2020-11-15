@@ -1,8 +1,6 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
 using System.Reflection;
 using System.Reflection.Emit;
 
@@ -34,7 +32,7 @@ namespace System.Yaml
         /// </summary>
         /// <typeparam name="AttributeType">取り出したい属性の型</typeparam>
         /// <returns>取り出した属性値</returns>
-        public static AttributeType GetAttribute<AttributeType>(this System.Reflection.MemberInfo info)
+        public static AttributeType GetAttribute<AttributeType>(this MemberInfo info)
             where AttributeType: Attribute
         {
             var attrs = info.GetCustomAttributes(typeof(AttributeType), true);
@@ -56,7 +54,7 @@ namespace System.Yaml
                 return AvailableTypes[name];
             Type type = Type.GetType(name);
             if ( type == null ) // ロードされているすべてのアセンブリから探す
-                type = System.AppDomain.CurrentDomain.GetAssemblies().Select(
+                type = AppDomain.CurrentDomain.GetAssemblies().Select(
                         asm => asm.GetType(name)).FirstOrDefault(t => t != null);
             return AvailableTypes[name] = type;
         }
@@ -227,7 +225,7 @@ namespace System.Yaml
             /// <returns>true if the specified objects are equal; otherwise, false.</returns>
             public override bool Equals(T x, T y)
             {
-                return Object.ReferenceEquals(x, y);
+                return ReferenceEquals(x, y);
             }
 
             /// <summary>
@@ -407,7 +405,7 @@ namespace System.Yaml
 
             #region IEnumerable メンバ
 
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 throw new NotImplementedException();
             }

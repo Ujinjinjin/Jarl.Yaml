@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 
@@ -22,7 +18,7 @@ namespace System.Yaml.Serialization
     ///   // Convert the object to string.
     ///   string s = EasyTypeConverter.ConvertToString(obj);
     /// 
-    ///   // Convert the string to an object of the spific type.
+    ///   // Convert the string to an object of the specific type.
     ///   object restored = EasyTypeConverter.ConvertFromString(s, type);
     ///   
     ///   Assert.AreEqual(obj, restored);
@@ -36,7 +32,7 @@ namespace System.Yaml.Serialization
 
         public EasyTypeConverter()
         {
-            Culture = System.Globalization.CultureInfo.InvariantCulture;
+            Culture = CultureInfo.InvariantCulture;
         }
 
         private static Dictionary<Type, TypeConverter> TypeConverters = new Dictionary<Type, TypeConverter>();

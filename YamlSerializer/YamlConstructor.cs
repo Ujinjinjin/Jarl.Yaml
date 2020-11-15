@@ -1,12 +1,9 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.Collections;
 using System.ComponentModel;
-using System.Text.RegularExpressions;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace System.Yaml.Serialization
 {
@@ -158,7 +155,7 @@ namespace System.Yaml.Serialization
                 byte[] binary;
                 var elementSize = Marshal.SizeOf(type.GetElementType());
                 if ( type.GetArrayRank() == 1 ) {
-                    binary = System.Convert.FromBase64CharArray(s.ToCharArray(), 0, s.Length);
+                    binary = Convert.FromBase64CharArray(s.ToCharArray(), 0, s.Length);
                     var arrayLength = binary.Length / elementSize;
                     dimension = new int[] { arrayLength };
                 } else {
@@ -171,7 +168,7 @@ namespace System.Yaml.Serialization
                         throw new FormatException("Irregal binary array");
                     // Fill values
                     s = m.Groups[2].Value;
-                    binary = System.Convert.FromBase64CharArray(s.ToCharArray(), 0, s.Length);
+                    binary = Convert.FromBase64CharArray(s.ToCharArray(), 0, s.Length);
                 }
                 var paramType = dimension.Select(n => typeof(int) /* n.GetType() */).ToArray();
                 var array = (Array)type.GetConstructor(paramType).Invoke(dimension.Cast<object>().ToArray());

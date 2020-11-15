@@ -1,13 +1,5 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.ComponentModel;
-using System.Collections;
-using System.Text.RegularExpressions;
-using System.Diagnostics;
-
 using System.IO;
 
 namespace System.Yaml.Serialization
@@ -316,7 +308,7 @@ namespace System.Yaml.Serialization
     /// 
     /// <h4>Collection classes</h4>
     /// 
-    /// <para>If an object implements <see cref="ICollection&lt;T&gt;"/>, <see cref="IList"/> or <see cref="IDictionary"/>
+    /// <para>If an object implements <see cref="ICollection{T}"/>, <see cref="IList"/> or <see cref="IDictionary"/>
     /// the child objects are serialized as well its other public members. 
     /// Pseudproperty <c>ICollection.Items</c> or <c>IDictionary.Entries</c> appears to hold the child objects.</para>
     /// 

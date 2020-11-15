@@ -1,9 +1,8 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 
 namespace System.Yaml.Serialization
 {
@@ -49,9 +48,9 @@ namespace System.Yaml.Serialization
 
             // public properties
             foreach ( var p in type.GetProperties(
-                    System.Reflection.BindingFlags.Instance | 
-                    System.Reflection.BindingFlags.Public | 
-                    System.Reflection.BindingFlags.GetProperty) ) {
+                    BindingFlags.Instance | 
+                    BindingFlags.Public | 
+                    BindingFlags.GetProperty) ) {
                 var prop = p; // create closures with this local variable
                 // not readable or parameters required to access the property
                 if ( !prop.CanRead || prop.GetGetMethod(false) == null || prop.GetIndexParameters().Count() != 0 )
@@ -64,9 +63,9 @@ namespace System.Yaml.Serialization
             }
 
             // public fields
-            foreach ( var f in type.GetFields(System.Reflection.BindingFlags.Instance |
-                    System.Reflection.BindingFlags.Public |
-                    System.Reflection.BindingFlags.GetField) ) {
+            foreach ( var f in type.GetFields(BindingFlags.Instance |
+                    BindingFlags.Public |
+                    BindingFlags.GetField) ) {
                 var field = f;
                 if ( !field.IsPublic )
                     continue;
@@ -80,7 +79,7 @@ namespace System.Yaml.Serialization
             // implements IDictionary
             if ( type.GetInterface("System.Collections.IDictionary") != null ) {
                 IsDictionary = true;
-                IsReadOnly = obj => ( (System.Collections.IDictionary)obj ).IsReadOnly;
+                IsReadOnly = obj => ( (IDictionary)obj ).IsReadOnly;
                 // extract Key, Value types from IDictionary<??, ??>
                 itype = type.GetInterface("System.Collections.Generic.IDictionary`2");
                 if ( itype != null ) {
@@ -110,11 +109,11 @@ namespace System.Yaml.Serialization
                         if ( itype != null )
                             ValueType = itype.GetGenericArguments()[0];     
                          */
-                        IsReadOnly = obj => ((System.Collections.IList)obj).IsReadOnly;
+                        IsReadOnly = obj => ((IList)obj).IsReadOnly;
                     }
         }
 
-        private void RegisterMember(Type type, System.Reflection.MemberInfo m, Type mType, Func<object, object> get, Action<object, object> set)
+        private void RegisterMember(Type type, Reflection.MemberInfo m, Type mType, Func<object, object> get, Action<object, object> set)
         {
             // struct that holds access method for property/field
             MemberInfo accessor = new MemberInfo();
@@ -158,8 +157,8 @@ namespace System.Yaml.Serialization
             //      DefaultValueAttribute(default) => compare to it
             //      otherwise => true
             var shouldSerialize = type.GetMethod("ShouldSerialize" + m.Name,
-                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic,
-                null, Type.EmptyTypes, new System.Reflection.ParameterModifier[0]);
+                BindingFlags.Instance | BindingFlags.NonPublic,
+                null, Type.EmptyTypes, new ParameterModifier[0]);
             if ( shouldSerialize != null && shouldSerialize.ReturnType == typeof(bool) && accessor.ShouldSeriealize == null )
                 accessor.ShouldSeriealize = obj => (bool)shouldSerialize.Invoke(obj, EmptyObjectArray);
             var attr2 = m.GetAttribute<DefaultValueAttribute>();

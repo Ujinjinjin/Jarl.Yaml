@@ -1,14 +1,12 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using NUnit.Framework;
-using System.Yaml;
-using System.Yaml.Serialization;
 using System.ComponentModel;
 using System.Drawing;
-using System.Collections;
+using System.Linq;
+using System.Yaml;
+using System.Yaml.Serialization;
 
 namespace YamlSerializerTest
 {
@@ -254,7 +252,7 @@ namespace YamlSerializerTest
                 "1",
                 new double[]{ 1.1, 2, -3 },
                 new string[]{ "def", "ghi", "1" },
-                new System.Drawing.Point(1,3), 
+                new Point(1,3), 
                 new YamlScalar("brabrabra") 
             };
 
@@ -414,7 +412,7 @@ namespace YamlSerializerTest
                 new double[]{ 1.1, 2, -3, 3.12, 13.2 },
                 new int[,] { { 1, 3}, {4, 5}, {10, 1} },
                 new string[]{ "jkl", "mno\r\npqr" },
-                new System.Drawing.Point(1,3),
+                new Point(1,3),
                 TestEnum.abc,
                 TestEnum.abc | TestEnum.あいう,
             };
@@ -794,7 +792,7 @@ namespace YamlSerializerTest
             );
             Assert.AreEqual(yaml, serializer.Serialize(serializer.Deserialize(yaml)[0]));
 
-            var c2 = new System.Collections.Hashtable();
+            var c2 = new Hashtable();
             c2.Add(10, 5);
             c2.Add("abc", 123);
             c2.Add(TestEnum.あいう, 5);

@@ -1,12 +1,9 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-
-using NUnit.Framework;
-using System.Resources;
 using System.Yaml;
-using System.Yaml.Serialization;
 using YamlSerializerTest.Properties;
 
 namespace YamlSerializerTest
@@ -283,7 +280,7 @@ namespace YamlSerializerTest
                     )
                 );
 
-                System.Diagnostics.Debugger.Log(1, "info", Resources.Example2_10);
+                Debugger.Log(1, "info", Resources.Example2_10);
                 var result = (YamlMapping)( parser.Parse(Resources.Example2_10)[0] );
                 Assert.AreSame(
                     ( (YamlSequence)result[str("hr")] )[1],
@@ -1849,39 +1846,46 @@ namespace YamlSerializerTest
             }
 
             public static Rule operator *(Rule a, Repeat repeat)
-            {
+			{
+				Func<bool> function = null;
                 switch ( repeat ) {
                 case Repeat.ZeroOrOne:
-                    return (Rule)( () => {
+					function = () => {
                         a.Evaluate();
                         return true;
-                    } );
+                    };
+					break;
                 case Repeat.OneOrMany:
-                    return (Rule)( () => {
+					function = () => {
                         if ( !a.Evaluate() )
                             return false;
                         while ( a.Evaluate() )
                             ;
                         return true;
-                    } );
+                    };
+					break;
                 case Repeat.Any:
-                    return (Rule)( () => {
+					function = () => {
                         while ( a.Evaluate() )
                             ;
                         return true;
-                    } );
+                    };
+					break;
                 }
-                return null;
+                return function;
             }
 
             public static Rule operator *(Rule a, int n)
-            {
-                return (Rule)( () => {
-                    for ( int i = 0; i < n; i++ )
-                        if ( !a.Evaluate() )
-                            return false;
-                    return true;
-                } );
+			{
+				// ReSharper disable once ConvertToLocalFunction
+				Func<bool> function = () =>
+				{
+					for (int i = 0; i < n; i++)
+						if (!a.Evaluate())
+							return false;
+					return true;
+				};
+                return function;
             }
 
             public static Rule operator |(Rule a, Rule b)
@@ -1912,8 +1916,10 @@ namespace YamlSerializerTest
         {
             [Test]
             public void TestRuleObject()
-            {
-                Rule rule = (Rule)( () => true );
+			{
+				// ReSharper disable once ConvertToLocalFunction
+				Func<bool> function = () => true;
+                Rule rule = function;
                 Rule rule2 = rule + rule + rule | rule * Repeat.Any;
                 Rule rule3 = ( ( rule2 + rule ) | rule ) * Repeat.OneOrMany;
                 Rule rule4 = ( rule3 * 4 ) * Repeat.ZeroOrOne;

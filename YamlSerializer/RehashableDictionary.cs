@@ -1,9 +1,7 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using System.Diagnostics;
+using System.Linq;
 
 namespace System.Yaml
 {
@@ -406,7 +404,7 @@ namespace System.Yaml
                 Dictionary.Added -= DictionaryChanged;
                 Dictionary.Removed -= DictionaryChanged;
             }
-            void DictionaryChanged(object sender, RehashableDictionary<K, V>.DictionaryEventArgs e)
+            void DictionaryChanged(object sender, DictionaryEventArgs e)
             {
                 Invalid = true;
             }
@@ -454,7 +452,7 @@ namespace System.Yaml
 
             #region IEnumerable メンバ
 
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return GetEnumerator();
             }
@@ -611,7 +609,7 @@ namespace System.Yaml
 
         #region IEnumerable メンバ
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }

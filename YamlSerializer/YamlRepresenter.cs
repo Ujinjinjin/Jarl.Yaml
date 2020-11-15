@@ -1,10 +1,7 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.Collections;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace System.Yaml.Serialization
 {
@@ -195,7 +192,7 @@ namespace System.Yaml.Serialization
 
         private static string Base64Encode(Type type, byte[] binary)
         {
-            var s = System.Convert.ToBase64String(binary);
+            var s = Convert.ToBase64String(binary);
             var sb = new StringBuilder();
             for ( int i = 0; i < s.Length; i += 80 ) {
                 if ( i + 80 < s.Length ) {
